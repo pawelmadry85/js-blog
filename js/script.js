@@ -70,7 +70,7 @@
             
             /* [DONE] find the title element  &  get the title from the title element */
             
-            const articleTitle = article.querySelector(optTitleSelector).innerHTML; /** PO CO NA KOŃCU JEST .innerHTML ? Czy do odczytania zawartości ? **/
+            const articleTitle = article.querySelector(optTitleSelector).innerHTML; /** .innerHTML do odczytania zawartości **/
             
             /* [DONE] create HTML of the link */
             
