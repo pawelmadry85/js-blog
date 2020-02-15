@@ -28,8 +28,9 @@
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list';
+
   function generateTitleLinks(){
-    /* [DONE] remove contents of titleList */
+  /* [DONE] remove contents of titleList */
     const titleList = document.querySelector(optTitleListSelector);
     titleList.innerHTML = '';
     /* [DONE] for each article */
@@ -46,7 +47,7 @@
       html = html + linkHTML;
     }
     titleList.innerHTML = html;
-    /** ZMIANA, PRZENIESIENIE Z PIERWSZEJ CZĘŚCI ZADANIA KODU ODPOWIEDZIALNEGO ZA POWIĄZANIE KLIKNIĘCIA W LINKI Z FUNKCJĄ titleClickHandler -  */
+    /** ZMIANA, PRZENIESIENIE Z PIERWSZEJ CZĘŚCI ZADANIA KODU ODPOWIEDZIALNEGO ZA POWIĄZANIE KLIKNIĘCIA W LINKI Z FUNKCJĄ titleClickHandler **/
     const links = document.querySelectorAll('.titles a');
     for(let link of links){
       link.addEventListener('click', titleClickHandler);
@@ -77,7 +78,6 @@
       }
       /* insert HTML of all the links into the tags wrapper */
       tagsWrapper.innerHTML = html;
-      console.log(tagsWrapper);
       /* END LOOP: for every article: */
     }
   }
@@ -85,12 +85,19 @@
   /*********************************** IV część zadania  ****************************************/
   function tagClickHandler(event){
     /* prevent default action for this event */
-
+    event.preventDefault();
     /* make new constant named "clickedElement" and give it the value of "this" */
+    const clickedElement = this;
 
     /* make a new constant "href" and read the attribute "href" of the clicked element */
 
+    const href = clickedElement.getAttribute('href');
+    console.log(href);
+
     /* make a new constant "tag" and extract tag from the "href" constant */
+
+    const tag = href.replace('#tag-','');
+    console.log(tag);
 
     /* find all tag links with class active */
 
@@ -109,6 +116,7 @@
     /* END LOOP: for each found tag link */
 
     /* execute function "generateTitleLinks" with article selector as argument */
+    generateTitleLinks('[data-tags~="' + tag + '"]');
   }
   /*********************************** V część zadania  ****************************************/
   function addClickListenersToTags(){
