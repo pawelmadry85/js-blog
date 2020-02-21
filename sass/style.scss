@@ -109,6 +109,7 @@ body {
 
   &.active {
     display: block;
+    font-weight: bold;
   }
 }
 
@@ -124,4 +125,29 @@ body {
   p {
     margin: 0 10px 0 0;
   }
+}
+
+.tags li {
+  display: inline-block;
+}
+
+.tag-size-1 {
+  font-size: smaller;
+  color: rosybrown;
+}
+.tag-size-2 {
+  font-size: small;
+  color: indigo;
+}
+.tag-size-3 {
+  font-size: medium;
+  color: gold;
+}
+.tag-size-4 {
+  font-size: large;
+  color: olivedrab;
+}
+.tag-size-5 {
+  font-size: larger;
+  color: red;
 }
