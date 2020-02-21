@@ -1,8 +1,7 @@
 {
   'use strict';
 
-  /*********************************** I część zadania  ****************************************/
-
+  /*********************************** titleClickHandler = function(event) ****************************************/
   const titleClickHandler = function(event){
     event.preventDefault();
     const clickedElement = this;
@@ -25,9 +24,7 @@
     /* [DONE] add class 'active' to the correct article */
     targetArticle.classList.add('active');
   };
-
-  /*********************************** II część zadania  ****************************************/
-
+  /*********************************** variables: ****************************************/
   const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
@@ -36,8 +33,8 @@
     optTagListSelector = '.tags .list',
     optCloudClassCount = 5,
     optCloudClassPrefix = 'tag-size-';
-
-  function generateTitleLinks(customSelector = ''){ /** Nadanie atrybutu customSelector */
+  /*********************************** generateTitleLinks(customSelektor = '') ****************************************/
+  function generateTitleLinks(customSelector = ''){
   /* [DONE] remove contents of titleList */
     const titleList = document.querySelector(optTitleListSelector);
     titleList.innerHTML = '';
@@ -48,7 +45,7 @@
       /* [DONE] get the article id */
       const articleId = article.getAttribute('id');
       /* [DONE] find the title element  &  get the title from the title element */
-      const articleTitle = article.querySelector(optTitleSelector).innerHTML; /** .innerHTML do odczytania zawartości **/
+      const articleTitle = article.querySelector(optTitleSelector).innerHTML;
       /* [DONE] create HTML of the link */
       const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
       /* [DONE] insert link into titleList */
@@ -62,9 +59,8 @@
     }
   }
   generateTitleLinks();
-
-  /*********************************** III część zadania  ****************************************/
-  function calculateTagsParams (tags) {
+  /*********************************** calculateTagsParams(tags) ****************************************/
+  function calculateTagsParams(tags) {
     const params = {
       max: 0,
       min: 999999
@@ -80,7 +76,7 @@
     }
     return params;
   }
-
+  /*********************************** calculateTagClass ****************************************/
   function calculateTagClass (count, params) {
     const normalizedCount = count - params.min;
     const normalizedMax = params.max - params.min;
@@ -89,7 +85,7 @@
 
     return optCloudClassPrefix + classNumber;
   }
-
+  /*********************************** generateTags() ****************************************/
   function generateTags(){
     /* [NEW] create a new variable allTags with an empty array */
     let allTags = {};
@@ -142,9 +138,7 @@
     tagList.innerHTML = allTagsHTML;
   }
   generateTags();
-
-  /*********************************** IV część zadania  ****************************************/
-
+  /*********************************** tagClickHandler(event) ****************************************/
   function tagClickHandler(event){
     /* prevent default action for this event */
     event.preventDefault();
@@ -173,9 +167,7 @@
     /* execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-tags~="' + tag + '"]');
   }
-
-  /*********************************** V część zadania  ****************************************/
-
+  /*********************************** addClickListenersToTags() ****************************************/
   function addClickListenersToTags(){
     /* find all links to tags */
     const tagLinks = document.querySelectorAll('.post-tags .list a');
@@ -187,9 +179,7 @@
     }
   }
   addClickListenersToTags();
-
-  /*********************************** VII Dodanie autora  ****************************************/
-
+  /*********************************** generateAuthor ****************************************/
   function generateAuthor(){
     /* find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
@@ -211,8 +201,7 @@
     }
   }
   generateAuthor();
-  /*********************************** VIII Dodanie authorClickHandler  ****************************************/
-
+  /*********************************** authorClickHandler(event) ****************************************/
   function authorClickHandler(event){
     /* prevent default action for this event */
     event.preventDefault();
@@ -242,7 +231,6 @@
     generateTitleLinks('[data-author="' + author + '"]');
   }
   /*********************************** XI Dodanie addClickListenerToAuthor zadania  ****************************************/
-
   function addClickListenersToAuthor(){
     /* find all links to authors */
     const authorLinks = document.querySelectorAll('.post-author a');
