@@ -1,5 +1,17 @@
 {
   'use strict';
+  /*********************************** variables: ****************************************/
+  const opt = {
+    ArticleSelector: '.post',
+    TitleSelector: '.post-title',
+    TitleListSelector: '.titles',
+    ArticleTagsSelector: '.post-tags .list',
+    ArticleAuthorSelector: '.post-author',
+    TagListSelector: '.tags',
+    AuthorsListSelector: '.authors.list',
+    CloudClassCount: 5,
+    CloudClassPrefix: 'tag-size-',
+  };
 
   /*********************************** titleClickHandler = function(event) ****************************************/
   const titleClickHandler = function(event){
@@ -24,29 +36,20 @@
     /* [DONE] add class 'active' to the correct article */
     targetArticle.classList.add('active');
   };
-  /*********************************** variables: ****************************************/
-  const optArticleSelector = '.post',
-    optTitleSelector = '.post-title',
-    optTitleListSelector = '.titles',
-    optArticleTagsSelector = '.post-tags .list',
-    optArticleAuthorSelector = '.post-author',
-    optTagListSelector = '.tags.list',
-    optCloudClassCount = 5,
-    optCloudClassPrefix = 'tag-size-';
 
   /*********************************** generateTitleLinks(customSelektor = '') ****************************************/
   function generateTitleLinks(customSelector = ''){
   /* [DONE] remove contents of titleList */
-    const titleList = document.querySelector(optTitleListSelector);
+    const titleList = document.querySelector(opt.TitleListSelector);
     titleList.innerHTML = '';
     /* [DONE] for each article */
-    const articles = document.querySelectorAll(optArticleSelector + customSelector);
+    const articles = document.querySelectorAll(opt.ArticleSelector + customSelector);
     let html = '';
     for(let article of articles) {
       /* [DONE] get the article id */
       const articleId = article.getAttribute('id');
       /* [DONE] find the title element  &  get the title from the title element */
-      const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+      const articleTitle = article.querySelector(opt.TitleSelector).innerHTML;
       /* [DONE] create HTML of the link */
       const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
       /* [DONE] insert link into titleList */
@@ -84,9 +87,9 @@
     const normalizedCount = count - params.min;
     const normalizedMax = params.max - params.min;
     const percentage = normalizedCount / normalizedMax;
-    const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
+    const classNumber = Math.floor(percentage * (opt.CloudClassCount - 1) + 1);
 
-    return optCloudClassPrefix + classNumber;
+    return opt.CloudClassPrefix + classNumber;
   }
 
   /*********************************** generateTags() ****************************************/
@@ -94,11 +97,11 @@
     /* [NEW] create a new variable allTags with an empty array */
     let allTags = {};
     /* find all articles */
-    const articles = document.querySelectorAll(optArticleSelector);
+    const articles = document.querySelectorAll(opt.ArticleSelector);
     /* START LOOP: for every article: */
     for(let article of articles) {
       /* find tags wrapper */
-      const tagsWrapper = article.querySelector(optArticleTagsSelector);
+      const tagsWrapper = article.querySelector(opt.ArticleTagsSelector);
       /* make html variable with empty string */
       let html = '';
       /* get tags from data-tags attribute */
@@ -125,7 +128,7 @@
       /* END LOOP: for every article: */
     }
     /* [NEW] find list of tags in right column */
-    const tagList = document.querySelector('.tags');
+    const tagList = document.querySelector(opt.TagListSelector);
     /* [NEW] create variable for all links HTML code */
     const tagsParams = calculateTagsParams(allTags);
 
@@ -187,17 +190,25 @@
 
   /*********************************** generateAuthor ****************************************/
   function generateAuthor(){
+    let allAuthors = {};
     /* find all articles */
-    const articles = document.querySelectorAll(optArticleSelector);
+    const articles = document.querySelectorAll(opt.ArticleSelector);
     /* START LOOP: for every article: */
+    const authorList = document.querySelector(opt.AuthorsListSelector);
     for(let article of articles) {
       /* find author wrapper */
-      const authorWrapper = article.querySelector(optArticleAuthorSelector);
+      const authorWrapper = article.querySelector(opt.ArticleAuthorSelector);
       /* make html variable with empty string */
       let html = '';
       /* get authors from data-author attribute */
       const articleAuthor = article.getAttribute('data-author');
       /* generate HTML of the link */
+      if(!allAuthors[articleAuthor]) {
+      /* [NEW] add tag to allTags object */
+        allAuthors[articleAuthor] = 1;
+      } else {
+        allAuthors[articleAuthor]++;
+      }
       const linkAuthorHTML = '<a href="#author-'+ articleAuthor +'">' + articleAuthor + '</a> ';
       /* add generated code to html variable */
       html = html + linkAuthorHTML;
@@ -205,6 +216,12 @@
       authorWrapper.innerHTML = html;
       /* END LOOP: for every article: */
     }
+    let allAuthorsHTML = '';
+    for(let author in allAuthors){
+      const authorLinkHTML ='<li><a href="#author-'+ author +'"' + ' class="author-name"' + '>' + author + '</a></li> ';
+      allAuthorsHTML += authorLinkHTML;
+    }
+    authorList.innerHTML = allAuthorsHTML;
   }
   generateAuthor();
 
@@ -241,7 +258,7 @@
   /*********************************** addClickListenerToAuthor ****************************************/
   function addClickListenersToAuthor(){
     /* find all links to authors */
-    const authorLinks = document.querySelectorAll('.post-author a');
+    const authorLinks = document.querySelectorAll('[href^="#author-"]');
     /* START LOOP: for each link */
     for (let authorLink of authorLinks) {
     /* add authorClickHandler as event listener for that link */
@@ -250,5 +267,4 @@
     }
   }
   addClickListenersToAuthor();
-
 }
