@@ -196,7 +196,7 @@
                     </ul>
                     <h2 class="section-title">Authors</h2>
                     <ul class="list authors">
-                      <!-- generowane przez JS -->>
+                      <!-- generowane przez JS -->
                     </ul>
                 </aside>
             </main>
@@ -213,6 +213,14 @@
 
     <script id="template-article-author" type="text/x-handlebars-template">
       <a href="#author-{{ articleAuthor }}">{{ articleAuthor }}</a>
+    </script>
+
+    <script id="template-article-rightsidebar-tag" type="text/x-handlebars-template">
+      <li><a href="#tag-{{ tag }}" class="{{ calcTagClass }}">{{ tag }}</a></li>
+    </script>
+
+    <script id="template-article-rightsidebar-author" type="text/x-handlebars-template">
+      <li><a href="#author-{{ author }}" class="author-name">{{ author }}</a></li>
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>

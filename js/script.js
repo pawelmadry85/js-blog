@@ -4,7 +4,9 @@
   const templates = {
     articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
     articleTag: Handlebars.compile(document.querySelector('#template-article-tag-link').innerHTML),
-    articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML)
+    articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML),
+    tagRightSidebarCloud: Handlebars.compile(document.querySelector('#template-article-rightsidebar-tag').innerHTML),
+    tagRightSidebarAuthor: Handlebars.compile(document.querySelector('#template-article-rightsidebar-author').innerHTML)
   };
 
 
@@ -153,7 +155,12 @@
     /* [NEW] START LOOP: for each tag in allTags: */
     for(let tag in allTags){
       /* [NEW] generate code of a link and add it to allTagsHTML */
-      const tagLinkHTML ='<li><a href="#tag-'+ tag +'"' + ' class="' + calculateTagClass(allTags[tag], tagsParams) + '"' + '>' + tag + '</a></li> ';
+      // const tagLinkHTML ='<li><a href="#tag-'+ tag +'"' + ' class="' + calculateTagClass(allTags[tag], tagsParams) + '"' + '>' + tag + '</a></li> ';
+
+      const calcTagClass = calculateTagClass(allTags[tag], tagsParams);
+      const linkHTMLData = {tag: tag, calcTagClass: calcTagClass };
+      const tagLinkHTML = templates.tagRightSidebarCloud(linkHTMLData);
+
       allTagsHTML += tagLinkHTML;
     }
     /*[NEW] add HTML from allTagsHTML to tagList */
@@ -240,7 +247,11 @@
     }
     let allAuthorsHTML = '';
     for(let author in allAuthors){
-      const authorLinkHTML ='<li><a href="#author-'+ author +'"' + ' class="author-name"' + '>' + author + '</a></li> ';
+    // const authorLinkHTML ='<li><a href="#author-'+ author +'"' + ' class="author-name"' + '>' + author + '</a></li> ';
+
+      const linkHTMLData = {author: author};
+      const authorLinkHTML = templates.tagRightSidebarAuthor(linkHTMLData);
+
       allAuthorsHTML += authorLinkHTML;
     }
     authorList.innerHTML = allAuthorsHTML;
