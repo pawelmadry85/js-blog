@@ -215,41 +215,34 @@
   /*********************************** generateAuthor ****************************************/
   function generateAuthor(){
     let allAuthors = {};
-    /* find all articles */
     const articles = document.querySelectorAll(opt.ArticleSelector);
-    /* START LOOP: for every article: */
     const authorList = document.querySelector(opt.AuthorsListSelector);
+
     for(let article of articles) {
-      /* find author wrapper */
       const authorWrapper = article.querySelector(opt.ArticleAuthorSelector);
-      /* make html variable with empty string */
       let html = '';
-      /* get authors from data-author attribute */
       const articleAuthor = article.getAttribute('data-author');
-      /* generate HTML of the link */
+
       if(!allAuthors[articleAuthor]) {
-      /* [NEW] add tag to allTags object */
         allAuthors[articleAuthor] = 1;
       } else {
         allAuthors[articleAuthor]++;
       }
-      // const linkAuthorHTML = '<a href="#author-'+ articleAuthor +'">' + articleAuthor + '</a> ';
 
+      // const linkAuthorHTML = '<a href="#author-'+ articleAuthor +'">' + articleAuthor + '</a> ';
       const linkHTMLData = {articleAuthor: articleAuthor};
       const linkAuthorHTML = templates.articleAuthor(linkHTMLData);
 
-
-      /* add generated code to html variable */
       html = html + linkAuthorHTML;
-      /* insert HTML of all the links into the authors wrapper */
       authorWrapper.innerHTML = html;
-      /* END LOOP: for every article: */
     }
     let allAuthorsHTML = '';
+
     for(let author in allAuthors){
     // const authorLinkHTML ='<li><a href="#author-'+ author +'"' + ' class="author-name"' + '>' + author + '</a></li> ';
 
-      const linkHTMLData = {author: author};
+      const numberOfArticle = allAuthors[author];
+      const linkHTMLData = {author: author, numberOfArticle: numberOfArticle};
       const authorLinkHTML = templates.tagRightSidebarAuthor(linkHTMLData);
 
       allAuthorsHTML += authorLinkHTML;
